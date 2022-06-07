@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Django restframework
     'rest_framework',
+
+    # App
+    'user_brand_plan',
 ]
 
 MIDDLEWARE = [
