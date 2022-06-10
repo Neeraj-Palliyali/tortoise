@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from utils.pagination import PlanListPagination
 
-from .serializers import PlanIdSerializer, PlanListSerializer, PlanSerialiezer
+from .serializers import PlanIdSerializer, PlanListSerializer, PlanSerialiezer, PromotionCreateSerializer, PromotionListSerializer
 from .models import BrandPlan, Promotion
 # Create your views here.
 
@@ -28,7 +28,6 @@ class BrandPlanViewset(viewsets.ModelViewSet):
         )
     
     def list(self, request, *args, **kwargs):
-        print(request.user.username)
         plans = BrandPlan.objects.all()
         if plans:
             page = self.paginate_queryset(plans)
@@ -48,16 +47,48 @@ class BrandPlanViewset(viewsets.ModelViewSet):
                 {
                     "success":False,
                     "message":"No plans"
-                }, status= status.HTTP_200_OK
+                }, status= status.HTTP_400_BAD_REQUEST
             )
 
 
 class PromotionViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
+    pagination_class = PlanListPagination
 
     def create(self, request, *args, **kwargs):
         serializer = PlanIdSerializer(data= request.data)
         serializer.is_valid(raise_exception=True)
-        plan = BrandPlan.objects.get(id = request.data.get('id'))
-        
-        return super().create(request, *args, **kwargs)
+        data = serializer.data
+        data.update({ "plan": request.data['plan_id']})
+        saveserialzer = PromotionCreateSerializer(data = data)
+        saveserialzer.is_valid(raise_exception=True)
+        saveserialzer.save()
+        return Response(
+            {
+                "success": True,
+                "message":"Promotion created"
+            }, status= status.HTTP_201_CREATED
+        )
+    
+    def list(self, request, *args, **kwargs):
+        plans = Promotion.objects.all()
+        if plans:
+            page = self.paginate_queryset(plans)
+            if page is not None:
+                serializer = PromotionListSerializer(plans, many = True)
+                page_data = self.get_paginated_response(serializer.data).data
+            
+            return Response(
+                {
+                "success":True,
+                "messages":"The promotions are",
+                "data":page_data
+                }, status= status.HTTP_200_OK
+            ) 
+        else:
+            return Response(
+                {
+                    "success":False,
+                    "message":"No promotions"
+                }, status= status.HTTP_400_BAD_REQUEST
+            )
