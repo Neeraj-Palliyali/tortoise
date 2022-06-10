@@ -3,19 +3,18 @@ from brand.models import BrandPlan, Promotion
 
 from user.models import CustomerGoals
 
-class UserPlanSubscribeSerializer(serializers.ModelSerializer):
+class UserPlanSubscribeSerializer(serializers.Serializer):
     plan_id = serializers.IntegerField()
+    deposit_amount = serializers.IntegerField()
+    user_id = serializers.IntegerField()
 
-    class Meta:
-        model = CustomerGoals
-        exclude = ['start_date', 'updated_at', 'plan_id']
 
     def validate(self, attrs):
-        try:
-            plan = BrandPlan.objects.get(id = attrs['plan_id'])
-        except BrandPlan.DoesNotExist:
+        print(attrs)
+        if not BrandPlan.objects.filter(id = attrs['plan_id']):
             raise serializers.ValidationError("No such plan exists")
-        attrs['plan_id'] = plan
+        if CustomerGoals.objects.filter(user_id_id = attrs['user_id'], plan_id = attrs['plan_id']):
+            raise serializers.ValidationError("Already subscribed to this plan")
     
         return super().validate(attrs)
 
@@ -36,3 +35,11 @@ class UserPlanListSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         
         return super(UserPlanListSerializer, self).to_representation(instance)
+
+class SubscribeSaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerGoals
+        exclude = ['updated_at', 'start_date']
+    
+    def validate(self, attrs):
+        return super().validate(attrs)
