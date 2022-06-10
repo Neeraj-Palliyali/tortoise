@@ -21,9 +21,19 @@ class BrandPlan(models.Model):
         ]
     )
     benefit_type = models.CharField(max_length=1 , choices=BENEFIT_CHOICES)
-    is_user_limited = models.BooleanField(default=False)
-    is_date_limited = models.BooleanField(default=False)
-    user_limit = models.IntegerField(blank= True, null= True)
-    expiry_data = models.DateField(blank= True, null= True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.plan_name
+    
+class Promotion(models.Model):
+    plan = models.ForeignKey(BrandPlan, on_delete= models.CASCADE)
+    name = models.CharField(max_length=50)
+    user_limit = models.IntegerField(blank= True, null= True)
+    expiry_date = models.DateField(blank= True, null= True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name

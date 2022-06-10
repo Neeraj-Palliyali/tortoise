@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class UserBrandPlanConfig(AppConfig):
+class BrandConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'user_brand_plan'
+    name = 'brand'

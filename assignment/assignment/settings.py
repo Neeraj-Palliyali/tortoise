@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Django restframework
     'rest_framework',
+    #swagger
+    'rest_framework_swagger',
 
     # App
-    'user_brand_plan',
-    'admin_brand_plan',
+    'user',
+    'brand',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +90,7 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = config.DATABASES
-
+SIMPLE_JWT = config.SIMPLE_JWT
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

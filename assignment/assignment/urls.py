@@ -26,7 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), 
-    path('user_plan/', include('user_brand_plan.urls'), name = 'user_plan'),
-    path('admin_plan/', include('admin_brand_plan.urls'), name = 'admin_plan'),
-    
+    path('user/', include('user.urls'), name = 'user'),
+    path('brand/', include('brand.urls'), name = 'brand'),   
 ]
