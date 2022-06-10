@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # App
     'user_brand_plan',
+    'admin_brand_plan',
 ]
 
 MIDDLEWARE = [

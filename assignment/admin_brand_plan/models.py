@@ -9,8 +9,11 @@ class BrandPlan(models.Model):
         ("V", "Extra Voucher"),
     )
     plan_name = models.CharField(max_length=50)
-    amount_options = models.CharField(max_length=50)
-    tenure_options = models.CharField(max_length=50)
+    amount_options = models.FloatField()
+    tenure_options = models.IntegerField(default=1, validators=[
+        MaxValueValidator(60),
+        MinValueValidator(1)
+        ])
     benefit_options = models.IntegerField(verbose_name="percentage",
         default=0, validators=[
         MaxValueValidator(100),
@@ -18,5 +21,9 @@ class BrandPlan(models.Model):
         ]
     )
     benefit_type = models.CharField(max_length=1 , choices=BENEFIT_CHOICES)
+    is_user_limited = models.BooleanField(default=False)
+    is_date_limited = models.BooleanField(default=False)
+    user_limit = models.IntegerField(blank= True, null= True)
+    expiry_data = models.DateField(blank= True, null= True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
