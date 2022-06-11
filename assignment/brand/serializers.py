@@ -35,10 +35,12 @@ class PlanIdSerializer(serializers.ModelSerializer):
         
         if not BrandPlan.objects.filter(id = attrs['plan_id']):
             raise serializers.ValidationError("No such plan exists")
+        
         promos = Promotion.objects.filter(plan_id = attrs['plan_id'])
         for promo in promos:
             if promo.is_active:
                 raise serializers.ValidationError("A brand cannot have more than one active promotions")
+        
         if not ('expiry_date' in attrs or 'user_limit' in attrs):
             raise serializers.ValidationError("Either expiry_date or user_limit is required")
         return super().validate(attrs)
@@ -58,5 +60,8 @@ class PromotionListSerializer(serializers.ModelSerializer):
         exclude = ['created_at', 'updated_at']
     
     def to_representation(self, instance):
-        return super(PromotionListSerializer, self).to_representation(instance)
-
+        # returing plan name for the specific promotion as well
+        representation =  super(PromotionListSerializer, self).to_representation(instance)
+        plan = BrandPlan.objects.get(id = instance.plan_id)
+        representation['plan_name'] = plan.plan_name
+        return representation

@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     #swagger
     'rest_framework_swagger',
-
+    # celery
+    'django_celery_results',
+    'django_celery_beat',
     # App
     'user',
     'brand',
@@ -129,3 +131,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CELERY_BROKER_URL = config.CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = config.CELERY_ACCEPT_CONTENT
+CELERY_RESULT_SERIALIZER = config.CELERY_RESULT_SERIALIZER
+CELERY_TIMEZONE = config.CELERY_TIMEZONE
+CELERY_TASK_SERIALIZER = config.CELERY_TASK_SERIALIZER
+CELERY_CACHE_BACKEND = config.CELERY_CACHE_BACKEND
+CELERY_RESULT_BACKEND = config.CELERY_RESULT_BACKEND
+CELERY_BEAT_SCHEDULER = config.CELERY_BEAT_SCHEDULER

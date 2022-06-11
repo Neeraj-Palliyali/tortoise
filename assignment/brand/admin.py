@@ -8,7 +8,7 @@ class PlanAdmin(admin.ModelAdmin):
     list_display= ('id','plan_name',)
 
 class PromotionAdmin(admin.ModelAdmin):
-    list_display= ('id','name','plan', )
+    list_display= ('id','name','plan','is_active' )
 
 admin.site.register(BrandPlan, PlanAdmin)
 admin.site.register(Promotion, PromotionAdmin)

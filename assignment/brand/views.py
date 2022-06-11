@@ -10,12 +10,15 @@ from .models import BrandPlan, Promotion
 # Create your views here.
 
 class BrandPlanViewset(viewsets.ModelViewSet):
-    
+    # Using simplejwt for authentication but same user
+    # can be both brand and user right now
+    # User role seperation not implemented 
     permission_classes = (IsAuthenticated,)
     serializer_class = PlanSerialiezer
     pagination_class = PlanListPagination
 
     def create(self, request, *args, **kwargs):
+        # Creating a plan for Brand 
         serializer = self.serializer_class(data =  request.data)
         if (serializer.is_valid(raise_exception=True)):
             serializer.save()
@@ -28,6 +31,7 @@ class BrandPlanViewset(viewsets.ModelViewSet):
         )
     
     def list(self, request, *args, **kwargs):
+        # Paginated list of plans
         plans = BrandPlan.objects.all()
         if plans:
             page = self.paginate_queryset(plans)
@@ -71,6 +75,8 @@ class PromotionViewset(viewsets.ModelViewSet):
         )
     
     def list(self, request, *args, **kwargs):
+        # queriying based on the not added
+        # Simple paginated list of all plans
         plans = Promotion.objects.all()
         if plans:
             page = self.paginate_queryset(plans)
