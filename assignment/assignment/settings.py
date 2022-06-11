@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Django restframework
     'rest_framework',
-    #swagger
-    'rest_framework_swagger',
     # celery
     'django_celery_results',
     'django_celery_beat',
