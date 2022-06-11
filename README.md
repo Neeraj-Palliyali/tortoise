@@ -6,7 +6,7 @@ Celery and Celery beat is also running as workers for auto expiry
 <br />
 Creating a db in postgres with 'tortoise' name is required and changing the broker url based on you choices
 <br />
-#Steps for installation
+# Steps for installation
 
 Step1:get into assignment directory
 Step2:django runserver
