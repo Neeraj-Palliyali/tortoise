@@ -1,11 +1,11 @@
 # tortoise
 
 I have used postgres for db.
-<br>
+<br />
 Celery and Celery beat is also running as workers for auto expiry
-<br>
+<br />
 Creating a db in postgres with 'tortoise' name is required and changing the broker url based on you choices
-<br>
+<br />
 #Steps for installation
 
 Step1:get into assignment directory
